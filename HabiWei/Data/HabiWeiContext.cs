@@ -15,6 +15,6 @@ namespace HabiWei.Data
         }
 
         public DbSet<HabiWei.Models.Habit> Habits { get; set; } = default!;
-        public DbSet<HabiWei.Models.WeightEntry> WeightEntry { get; set; } = default!;
+        public DbSet<HabiWei.Models.WeightEntry> WeightEntries { get; set; } = default!;
     }
 }

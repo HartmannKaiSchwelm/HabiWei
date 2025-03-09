@@ -22,7 +22,7 @@ namespace HabiWei.Controllers
         // GET: WeightEntries
         public async Task<IActionResult> Index()
         {
-            return View(await _context.WeightEntry.ToListAsync());
+            return View(await _context.WeightEntries.ToListAsync());
         }
 
         // GET: WeightEntries/Details/5
@@ -33,7 +33,7 @@ namespace HabiWei.Controllers
                 return NotFound();
             }
 
-            var weightEntry = await _context.WeightEntry
+            var weightEntry = await _context.WeightEntries
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (weightEntry == null)
             {
@@ -58,6 +58,7 @@ namespace HabiWei.Controllers
         {
             if (ModelState.IsValid)
             {
+                Console.WriteLine($"Received Weight: {weightEntry.Weight}");
                 _context.Add(weightEntry);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -73,7 +74,7 @@ namespace HabiWei.Controllers
                 return NotFound();
             }
 
-            var weightEntry = await _context.WeightEntry.FindAsync(id);
+            var weightEntry = await _context.WeightEntries.FindAsync(id);
             if (weightEntry == null)
             {
                 return NotFound();
@@ -124,7 +125,7 @@ namespace HabiWei.Controllers
                 return NotFound();
             }
 
-            var weightEntry = await _context.WeightEntry
+            var weightEntry = await _context.WeightEntries
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (weightEntry == null)
             {
@@ -139,10 +140,10 @@ namespace HabiWei.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var weightEntry = await _context.WeightEntry.FindAsync(id);
+            var weightEntry = await _context.WeightEntries.FindAsync(id);
             if (weightEntry != null)
             {
-                _context.WeightEntry.Remove(weightEntry);
+                _context.WeightEntries.Remove(weightEntry);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +152,7 @@ namespace HabiWei.Controllers
 
         private bool WeightEntryExists(int id)
         {
-            return _context.WeightEntry.Any(e => e.Id == id);
+            return _context.WeightEntries.Any(e => e.Id == id);
         }
     }
 }
