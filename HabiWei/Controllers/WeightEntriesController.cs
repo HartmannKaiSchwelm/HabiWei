@@ -22,8 +22,20 @@ namespace HabiWei.Controllers
         // GET: WeightEntries
         public async Task<IActionResult> Index()
         {
-            return View(await _context.WeightEntries.ToListAsync());
+            var weightEntries = await _context.WeightEntries.ToListAsync();
+            var groupedEntries = weightEntries
+                .GroupBy(e => (e.Date - weightEntries.Min(w => w.Date)).Days / 7)
+                .Select(g => new
+                {
+                    Week = g.Key + 1,
+                    AverageWeight = g.Average(e => e.Weight)
+                })
+                .ToList();
+
+            ViewBag.WeeklyAverages = groupedEntries;
+            return View(weightEntries);
         }
+            
 
         // GET: WeightEntries/Details/5
         public async Task<IActionResult> Details(int? id)

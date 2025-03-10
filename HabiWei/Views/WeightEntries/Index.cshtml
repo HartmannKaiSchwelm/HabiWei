@@ -1,41 +1,43 @@
 ﻿@model IEnumerable<HabiWei.Models.WeightEntry>
-
 @{
-    ViewData["Title"] = "Index";
+    ViewBag.Title = "Weight Entries";
 }
 
-<h1>Index</h1>
+            <h2> Weight Entries </h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<button onclick="location.href='@Url.Action("Create", "WeightEntries")'">Enter new days weight</button>
+            <table class="table">
+<thead>
+    <tr>
+        <th>Week</th>
+        <th>Average Weight</th>
+    </tr>
+</thead>
+<tbody>
+        @foreach (var item in ViewBag.WeeklyAverages)
+        {
+        <tr>
+        <td> @item.Week </td >
+        <td> @item.AverageWeight.ToString("F2") </td>
+        </tr >
+        }
+</tbody>
+            </table>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Weight)
-            </th>
-            <th></th>
+            <th>Date</th>
+            <th>Weight</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Weight)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+            @foreach (var item in Model)
+            {
+            <tr>
+            <td> @item.Date.ToShortDateString() </td >
+            <td> @item.Weight </td>
+            </tr>
+            }
     </tbody>
 </table>
